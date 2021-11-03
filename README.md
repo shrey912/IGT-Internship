@@ -1,8 +1,8 @@
 # First-Impression
 
-This is the solution to the problem "First Impressions" given in CVPR'17, ECCV '16 & ICPR '16 and this piece of code is the partial implementation(Video Modality) of the paper [Deep Bimodal Regression for Apparent Personality Analysis](https://cs.nju.edu.cn/wujx/paper/eccvw16_APA.pdf) which is the winner of ECCV 2016
+This solution is the embodiment of the paper [Deep Bimodal Regression for Apparent Personality Analysis](https://cs.nju.edu.cn/wujx/paper/eccvw16_APA.pdf). The solution is based on their framework and has the potential of being altered into an API for dynamic use.
 
-This problem is a challenge on “first impressions”, in which participants will develop solutions for recognizing personality traits of users in short video sequences. They have made available a large newly collected data set sponsored by Microsoft of at least 10,000 15-second videos collected from YouTube, annotated with personality traits by AMT workers. 
+This problem is a challenge on “first impressions”, which referes to the personality analysis of a person using just 15 seconds of footage but it can be extended to higher performance abilities as the time of the interview increases. Also it is catered through a huge dataset with 1.5 Lakh seconds of footage with 6.1 frames per second implying more than 10 Lakh frames for training and testing the model.
 
 The traits to be recognized will correspond to the “big five” personality traits used in psychology and well known of hiring managers using standardized personality profiling:
 * Extroversion
@@ -11,7 +11,6 @@ The traits to be recognized will correspond to the “big five” personality tr
 * Neuroticism
 * Openness to experience.
 
-As is known, the first impression made is highly important in many contexts, such as human resourcing or job interviews. This work could become very relevant to training young people to present themselves better by changing their behavior in simple ways.
 
 The model used is called `Descriptor Aggregation Network` called DAN in short.
 
@@ -23,7 +22,7 @@ What distinguishes DAN from the traditional CNN is: the fully connected layers a
 
 ## Getting Started 
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+Follow the instructions for the execution pipeline but make a note of the prerequisites
 
 ### Prerequisites
 
@@ -36,7 +35,7 @@ These instructions will get you a copy of the project up and running on your loc
 * [Pillow 6.1.0](https://pypi.org/project/Pillow/) Python Imaging Library
 * [OpenCV 3.4.1](https://breakthrough.github.io/Installing-OpenCV/)  library used for Image Processing
 * [ffmpeg](https://ffmpeg.zeranoe.com/builds/ ) software suite of libraries and programs for handling video, audio, and other multimedia 
-files and streams
+files and streams. Also add the same in your Path using Environment Varibles.
 * [python_speech_features](https://pypi.org/project/python_speech_features/) This library provides common speech features for ASR including MFCCs and filterbank energies
 
 ### Installing
@@ -44,10 +43,10 @@ files and streams
 Clone the repository
 
 ```
-git clone https://github.com/THEFASHIONGEEK/First-Impression.git
+git clone https://github.com/shrey912/IGT-Internship.git
 ```
 
-Download the training dataset and extract it into a new /data directory with all 75 training zip files and 25 validation zip files as it is, we will extract them through the script.
+[Download the dataset](https://chalearnlap.cvc.uab.cat/dataset/24/description/) and extract it into a new "data" directory with all 75 training zip files and 25 validation zip files. The extraction of those files is done by the execution of the following code.
 
 [Download](http://www.vlfeat.org/matconvnet/models/vgg-face.mat) Pretrained Vgg-face model and move it to the root directory
 
@@ -67,7 +66,7 @@ Run the vid_to_wav.py file to extract audio(.wav) files from the videos and save
 ```
 python vid_to_wav.py
 ```
-If succesfully completed then run the Write_Into_TFRecords.py file to form a data pipeline by saving the all the train images into train_full.tfrecords file , all the validation images into val_full.tfrecords to load it later during training
+Write the records using serialization. For that execute the following code
 
 ```
 python Write_Into_TFRecords.py
@@ -83,6 +82,7 @@ Start the training by running the following command
 ```
 python train.py
 ```
+
 The final accuracy for the model is 0.9130 and accuracy for every trait is as follows:
 *	Extroversion: 0.9133
 *	Agreeableness: 0.9126
