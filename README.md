@@ -83,6 +83,12 @@ Start the training by running the following command
 ```
 python train.py
 ```
+The final accuracy for the model is 0.9130 and accuracy for every trait is as follows:
+*	Extroversion: 0.9133
+*	Agreeableness: 0.9126
+*	Consciousness: 0.9166
+*	Neuroticism: 0.9100
+*	Openness: 0.9123
 
 
 ## Acknowledgments
