@@ -18,35 +18,35 @@ NUM_TEST_IMAGES = 199900
 N_EPOCHS = 1
 
 
-imgs = tf.placeholder("float", [None, 224, 224, 3], name="image_placeholder")
-values = tf.placeholder("float", [None, 5], name="value_placeholder")
+imgs = tf.compat.v1.Variable("float", [None, 224, 224, 3], name="image_placeholder")
+values = tf.compat.v1.Variable("float", [None, 5], name="value_placeholder")
 
-config = tf.ConfigProto()
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
 config.gpu_options.per_process_gpu_memory_fraction = 0.8
-with tf.Session(config=config) as sess:
+with tf.compat.v1.Session(config=config) as sess:
 
     model = DAN(imgs, REG_PENALTY=REG_PENALTY, preprocess="vggface")
     # output = model.output
 
-    tr_reader = tf.TFRecordReader()
-    tr_filename_queue = tf.train.string_input_producer(
+    tr_reader = tf.compat.v1.TFRecordReader()
+    tr_filename_queue = tf.compat.v1.train.string_input_producer(
         ["train_full.tfrecords"], num_epochs=N_EPOCHS
     )
     _, tr_serialized_example = tr_reader.read(tr_filename_queue)
     # Decode the record read by the reader
     tr_feature = {
-        "train/image": tf.FixedLenFeature([], tf.string),
-        "train/label": tf.FixedLenFeature([], tf.string),
+        "train/image": tf.compat.v1.FixedLenFeature([], tf.compat.v1.string),
+        "train/label": tf.compat.v1.FixedLenFeature([], tf.compat.v1.string),
     }
-    tr_features = tf.parse_single_example(tr_serialized_example, features=tr_feature)
+    tr_features = tf.compat.v1.parse_single_example(tr_serialized_example, features=tr_feature)
     # Convert the image data from string back to the numbers
-    tr_image = tf.decode_raw(tr_features["train/image"], tf.uint8)
-    tr_label = tf.decode_raw(tr_features["train/label"], tf.float32)
+    tr_image = tf.compat.v1.decode_raw(tr_features["train/image"], tf.compat.v1.uint8)
+    tr_label = tf.compat.v1.decode_raw(tr_features["train/label"], tf.compat.v1.float32)
     # Reshape image data into the original shape
-    tr_image = tf.reshape(tr_image, [224, 224, 3])
-    tr_label = tf.reshape(tr_label, [5])
-    tr_images, tr_labels = tf.train.shuffle_batch(
+    tr_image = tf.compat.v1.reshape(tr_image, [224, 224, 3])
+    tr_label = tf.compat.v1.reshape(tr_label, [5])
+    tr_images, tr_labels = tf.compat.v1.train.shuffle_batch(
         [tr_image, tr_label],
         batch_size=BATCH_SIZE,
         capacity=100,
@@ -54,24 +54,24 @@ with tf.Session(config=config) as sess:
         allow_smaller_final_batch=True,
     )
 
-    val_reader = tf.TFRecordReader()
-    val_filename_queue = tf.train.string_input_producer(
+    val_reader = tf.compat.v1.TFRecordReader()
+    val_filename_queue = tf.compat.v1.train.string_input_producer(
         ["val_full.tfrecords"], num_epochs=N_EPOCHS
     )
     _, val_serialized_example = val_reader.read(val_filename_queue)
     # Decode the record read by the reader
     val_feature = {
-        "val/image": tf.FixedLenFeature([], tf.string),
-        "val/label": tf.FixedLenFeature([], tf.string),
+        "val/image": tf.compat.v1.FixedLenFeature([], tf.compat.v1.string),
+        "val/label": tf.compat.v1.FixedLenFeature([], tf.compat.v1.string),
     }
-    val_features = tf.parse_single_example(val_serialized_example, features=val_feature)
+    val_features = tf.compat.v1.parse_single_example(val_serialized_example, features=val_feature)
     # Convert the image data from string back to the numbers
-    val_image = tf.decode_raw(val_features["val/image"], tf.uint8)
-    val_label = tf.decode_raw(val_features["val/label"], tf.float32)
+    val_image = tf.compat.v1.decode_raw(val_features["val/image"], tf.compat.v1.uint8)
+    val_label = tf.compat.v1.decode_raw(val_features["val/label"], tf.compat.v1.float32)
     # Reshape image data into the original shape
-    val_image = tf.reshape(val_image, [224, 224, 3])
-    val_label = tf.reshape(val_label, [5])
-    val_images, val_labels = tf.train.shuffle_batch(
+    val_image = tf.compat.v1.reshape(val_image, [224, 224, 3])
+    val_label = tf.compat.v1.reshape(val_label, [5])
+    val_images, val_labels = tf.compat.v1.train.shuffle_batch(
         [val_image, val_label],
         batch_size=BATCH_SIZE,
         capacity=100,
@@ -79,13 +79,13 @@ with tf.Session(config=config) as sess:
         allow_smaller_final_batch=True,
     )
 
-    init_op = tf.group(
-        tf.global_variables_initializer(), tf.local_variables_initializer()
+    init_op = tf.compat.v1.group(
+        tf.compat.v1.global_variables_initializer(), tf.compat.v1.local_variables_initializer()
     )
     sess.run(init_op)
 
-    coord = tf.train.Coordinator()
-    threads = tf.train.start_queue_runners(coord=coord)
+    coord = tf.compat.v1.train.Coordinator()
+    threads = tf.compat.v1.train.start_queue_runners(coord=coord)
 
     file_list = [
         "param" + str((60 / N_EPOCHS) * (x + 1)) + ".pkl" for x in range(0, N_EPOCHS)
@@ -142,7 +142,7 @@ with tf.Session(config=config) as sess:
             val_acc_list.append(val_mean_acc)
             if not i % 20000:
                 print(i, "images completed in validation")
-        sess.run(tf.local_variables_initializer())
+        sess.run(tf.compat.v1.local_variables_initializer())
 
         val_mean_acc = np.mean(val_acc_list)
         validation_accuracy.append(val_mean_acc)
