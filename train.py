@@ -10,7 +10,6 @@ from remtime import *
 
 warnings.filterwarnings("ignore")
 
-
 LEARNING_RATE = 0.0005
 BATCH_SIZE = 25
 N_EPOCHS = 2
