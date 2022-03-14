@@ -7,7 +7,6 @@ from scipy.io import loadmat
 
 warnings.filterwarnings("ignore")
 
-
 class DAN_PLUS:
     def __init__(self, imgs, REG_PENALTY=0, preprocess=None):
         self.imgs = imgs
