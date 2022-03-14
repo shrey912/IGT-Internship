@@ -165,6 +165,7 @@ with tf.compat.v1.Session(config=config) as sess:
                 pickle.dump([training_accuracy, validation_accuracy], nfile)
             print("Half testing saved")
 
+            
     coord.request_stop()
     # Wait for threads to stop
     coord.join(threads)
