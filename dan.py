@@ -12,6 +12,7 @@ import pickle
 import warnings
 
 import numpy as np
+
 import tensorflow as tf
 from scipy.io import loadmat
 
