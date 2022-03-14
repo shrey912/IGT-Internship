@@ -17,6 +17,7 @@ for i in range(1, 76):
         try:
             if not os.path.exists("VoiceData/trainingData/"):
                 os.makedirs("VoiceData/trainingData/")
+                
         except OSError:
             print("Error: Creating directory of data")
         command = "ffmpeg -i unzippedData/{}/{}.mp4 -ab 320k -ac 2 -ar 44100 -vn VoiceData/trainingData/{}.wav".format(
