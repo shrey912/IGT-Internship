@@ -97,4 +97,4 @@ The final accuracy for the model is 0.9130 and accuracy for every trait is as fo
 * [TfRecord Data Pipeline](http://machinelearninguru.com/deep_learning/data_preparation/tfrecord/tfrecord.html#read) - Used to make data pipeline
 * [VGG16 in TensorFlow](https://www.cs.toronto.edu/~frossard/post/vgg16/) - Used in DAN 
 * [Author's code](https://github.com/tzzcl/ChaLearn-APA-Code#2-extract-audio-feature-from-video)
-* [Seema Ma'am](https://www.linkedin.com/in/gangwarseema/) for giving me the opportunity to intern and for assigning me this project
+
